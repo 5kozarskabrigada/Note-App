@@ -1,0 +1,31 @@
+body {
+  background-color: #0d0d12;
+  color: #f5edf5;
+  font-family: Calibri, sans-serif;
+}
+
+button {
+  background-color: #b183d4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #cabee9;
+}
+
+a {
+  color: #b183d4;
+  transition: color 0.2s ease;
+}
+
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
