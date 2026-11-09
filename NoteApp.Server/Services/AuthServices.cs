@@ -80,7 +80,7 @@ namespace NoteApp.Server.Services
             return user == null ? null : GenerateJwtToken(user);
         }
 
-        public async Task<User> Register(string username, string password)
+            public async Task<User> Register(string username, string email, string password)
         {
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentException("Username cannot be null or empty", nameof(username));
@@ -92,6 +92,7 @@ namespace NoteApp.Server.Services
             var user = new User
             {
                 Username = username,
+                Email = email,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
                 PasswordSalt = hmac.Key,
                 RefreshToken = null,
