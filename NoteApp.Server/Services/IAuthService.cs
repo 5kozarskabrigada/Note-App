@@ -11,7 +11,7 @@ namespace NoteApp.Server.Services
         Task<string?> Login(string username, string password);
         Task<User> Register(string username, string password);
         bool VerifyToken(string token);
-        Task<User?> Authenticate(string username, string password);
+        Task<User> Register(string username, string email, string password);
 
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
     }
