@@ -121,6 +121,38 @@ public class NotesController : ControllerBase
 
         return note != null ? Ok(note) : NotFound();
     }
+        [HttpPut("{id}")]
+    public async Task<ActionResult<NoteResponse>> UpdateNote(int id, [FromBody] CreateNoteDto dto)
+    {
+        var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!int.TryParse(userIdStr, out var userId))
+        {
+            return Unauthorized("Invalid user ID");
+        }
+
+        var note = await _context.Notes
+            .FirstOrDefaultAsync(n => n.Id == id && n.UserId == userId);
+
+        if (note == null)
+        {
+            return NotFound();
+        }
+
+        note.Title = dto.Title;
+        note.EncryptedContent = dto.EncryptedContent;
+        note.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new NoteResponse
+        {
+            Id = note.Id,
+            Title = note.Title,
+            EncryptedContent = note.EncryptedContent,
+            CreatedAt = note.CreatedAt
+        });
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteNote(int id)
     {
