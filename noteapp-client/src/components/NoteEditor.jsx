@@ -125,8 +125,6 @@ const NoteEditor = () => {
                 return;
             }
 
-            if (id && currentContent === lastSavedContent.current) return;
-
             setSaving(true);
 
             if (id) {
