@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #0d0d12;
+  font-family: 'Roboto', sans-serif;
+  color: #f5edf5;
+}
+
+#root {
+  justify-content: center;
+  align-items: center;
+}
+
+
+.note-editor-wrapper {
+  display: flex;
+  flex-direction: row;  
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #282b35;
+  padding: 20px;
+  box-sizing: border-box;
+}
