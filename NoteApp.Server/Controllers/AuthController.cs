@@ -33,17 +33,7 @@ namespace NoteApp.Server.Controllers
                 return BadRequest("Username already exists");
 
 
-            using var hmac = new HMACSHA512();
-            var user = new User
-            {
-                Username = dto.Username,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
-                PasswordSalt = hmac.Key
-            };
-
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+                await _authService.Register(dto.Username, dto.Email, dto.Password);
 
 
             return Ok(new { Message = "Registration successful" });
