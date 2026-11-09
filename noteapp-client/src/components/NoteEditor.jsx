@@ -11,7 +11,7 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 import FontFamily from '@tiptap/extension-font-family';
 import { toast } from 'react-toastify';
-import { createNote, getNoteById } from '../api/api';
+import { createNote, getNoteById, updateNote } from '../api/api';
 import './NoteEditor.css';
 
 
@@ -125,22 +125,29 @@ const NoteEditor = () => {
                 return;
             }
 
+            if (id && currentContent === lastSavedContent.current) return;
 
             setSaving(true);
-            const created = await createNote(note.title, currentContent);
 
+            if (id) {
+                await updateNote(id, { title: note.title, content: currentContent });
+                lastSavedContent.current = currentContent;
+            } else {
+                const created = await createNote(note.title, currentContent);
 
-            if (created?.id) {
-                navigate(`/note/${created.id}`);
-                toast.success('Note created successfully');
-                window.dispatchEvent(new Event('noteCreated'));
+                if (created?.id) {
+                    lastSavedContent.current = currentContent;
+                    navigate(`/note/${created.id}`);
+                    toast.success('Note created successfully');
+                    window.dispatchEvent(new Event('noteCreated'));
+                }
             }
         } catch (error) {
             toast.error(`Save failed: ${error.message}`);
         } finally {
             setSaving(false);
         }
-    }, [editor, saving, note.title, navigate]);
+    }, [editor, saving, note.title, navigate, id]);
 
 
 
